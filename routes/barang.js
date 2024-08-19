@@ -125,4 +125,48 @@ router.post("/find_or_create", async (req, res) => {
   }
 });
 
+router.post("/find_count", async (req, res) => {
+  let page = 1;
+  let limit = 10;
+
+  if (req.body.hasOwnProperty("page")) {
+    if (req.body.page > 0) {
+      page = req.body.page;
+    }
+  }
+
+  if (req.body.hasOwnProperty("per_page")) {
+    limit = req.body.per_page;
+  }
+
+  let offset = page * limit - limit;
+  let params = {
+    limit: limit,
+    offset: offset,
+  };
+
+  if (req.body.hasOwnProperty("search")) {
+    if (req.body.search != null || req.search.body != "") {
+      params.where = {
+        nama_barang: {
+          [Op.like]: `%${req.body.search}%`,
+        },
+      };
+    }
+  }
+
+  const { count, rows } = await Barang.findAndCountAll(params);
+
+  return res.send({
+    success: true,
+    message: "oke",
+    data: rows,
+    pagination: {
+      page: page,
+      per_page: limit,
+      total_data: count,
+    },
+  });
+});
+
 module.exports = router;
