@@ -4,3 +4,4 @@ repo untuk latihan node js dan coba-coba liblary sequelize, beberapa liblary yan
 
 - Express
 - Sequelize
+- Bcript
