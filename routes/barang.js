@@ -169,4 +169,12 @@ router.post("/find_count", async (req, res) => {
   });
 });
 
+// =============================================================================================================
+// getter
+
+router.get("/getter_test/:id", async (req, res) => {
+  const data = await Barang.findByPk(req.params.id);
+  return res.send(data);
+});
+
 module.exports = router;

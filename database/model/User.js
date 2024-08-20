@@ -1,6 +1,8 @@
 const sequelize = require("../sequelize");
 
 const { DataTypes, Model } = require("sequelize");
+const bcript = require("bcrypt");
+const saltRounds = 10;
 
 class User extends Model {}
 
@@ -19,6 +21,14 @@ User.init(
     umur: {
       type: DataTypes.INTEGER,
       allowNull: true,
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      // set(value) {
+      //   const salt = bcript.genSalt(this.saltRounds);
+      //   this.setDataValue(bcript.hash(value, this.saltRounds));
+      // },
     },
   },
   {
